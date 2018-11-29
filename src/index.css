@@ -6,7 +6,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: pink;
+  background:
+  linear-gradient(135deg, #d4d8dd 21px, #f3f9ff 22px, #f3f9ff 24px, transparent 24px, transparent 67px, #f3f9ff 67px, #f3f9ff 69px, transparent 69px),
+  linear-gradient(225deg, #d4d8dd 21px, #f3f9ff 22px, #f3f9ff 24px, transparent 24px, transparent 67px, #f3f9ff 67px, #f3f9ff 69px, transparent 69px)0 64px;
+  background-color:#d4d8dd;
+  background-size: 64px 128px;
 }
 
 code {
