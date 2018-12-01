@@ -1,18 +1,82 @@
 import React, { Component } from 'react';
+import Clarifai from 'clarifai';
+
 import Nav from './components/navigation/Nav';
 import Logo from './components/logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImgLinkForm from './components/ImgLinkForm/ImgLinkForm';
+import FaceRecog from './components/FaceRecog/FaceRecog';
+import API_Key from './config.js';
+
 import './App.css';
 
+const app = new Clarifai.App({
+ apiKey: API_Key
+});
+
+
 class App extends Component {
+  state = {
+    input: '',
+    imageUrl: '',
+    box: {}
+  }
+
+  getFaceLocations = data => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('input-image');
+    const width = Number(image.width);
+    const height = Number(image.height);
+
+    return { //returns object with points to corners on face
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = box => {
+    console.log(box);
+    this.setState({ box });
+  }
+
+  handleInputChange = e => {
+    this.setState({
+      input: e.target.value
+    })
+  }
+
+  //for buttons, always need an onSubmit function
+  handleSubmit = () => {
+    // the image url should get displayed on submit
+    this.setState({
+      imageUrl: this.state.input
+    }, () => {
+      //imageUrl doesnt work here bc of setStates nature
+      app.models.predict(
+        Clarifai.FACE_DETECT_MODEL, this.state.imageUrl)
+      .then(response => {
+          this.displayFaceBox(this.getFaceLocations(response))
+      })
+      .catch (err => console.log(`[Error]: ${err}`))
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Nav />
         <Logo />
         <Rank />
-        <ImgLinkForm />
+        <ImgLinkForm
+          onInputChange={this.handleInputChange}
+          onSubmit={this.handleSubmit}
+        />
+        <FaceRecog
+          imageUrl={this.state.imageUrl}
+          box={this.state.box}
+        />
       </div>
     );
   }
