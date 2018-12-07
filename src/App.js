@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Clarifai from 'clarifai';
 
-import Nav from './components/navigation/Nav';
+import SignOut from './components/SignOut/SignOut';
 import Logo from './components/logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImgLinkForm from './components/ImgLinkForm/ImgLinkForm';
@@ -65,14 +65,18 @@ class App extends Component {
     })
   }
 
-
+  onRouteChange = (route) => {
+    this.setState({ route });
+  }
 
   render() {
     return (
       <div className="App">
-        <Nav />
+        <SignOut
+          onRouteChange={this.onRouteChange}
+        />
         {this.state.route === 'signin'
-        ? <SignIn />
+        ? <SignIn onRouteChange={this.onRouteChange}/>
         : <div>
             <Logo />
             <Rank />
