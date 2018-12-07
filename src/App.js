@@ -6,6 +6,7 @@ import Logo from './components/logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImgLinkForm from './components/ImgLinkForm/ImgLinkForm';
 import FaceRecog from './components/FaceRecog/FaceRecog';
+import SignIn from './components/SignIn/SignIn';
 import API_Key from './config.js';
 
 import './App.css';
@@ -19,7 +20,8 @@ class App extends Component {
   state = {
     input: '',
     imageUrl: '',
-    box: {}
+    box: {},
+    route: 'signin'
   }
 
   getFaceLocations = data => {
@@ -53,7 +55,7 @@ class App extends Component {
     this.setState({
       imageUrl: this.state.input
     }, () => {
-      //imageUrl doesnt work here bc of setStates nature
+      //to use imageUrl, need to use cb in setState so when imageUrl ahs value THEN FACE_DETECT will start
       app.models.predict(
         Clarifai.FACE_DETECT_MODEL, this.state.imageUrl)
       .then(response => {
@@ -63,20 +65,27 @@ class App extends Component {
     })
   }
 
+
+
   render() {
     return (
       <div className="App">
         <Nav />
-        <Logo />
-        <Rank />
-        <ImgLinkForm
-          onInputChange={this.handleInputChange}
-          onSubmit={this.handleSubmit}
-        />
-        <FaceRecog
-          imageUrl={this.state.imageUrl}
-          box={this.state.box}
-        />
+        {this.state.route === 'signin'
+        ? <SignIn />
+        : <div>
+            <Logo />
+            <Rank />
+            <ImgLinkForm
+              onInputChange={this.handleInputChange}
+              onSubmit={this.handleSubmit}
+            />
+            <FaceRecog
+              imageUrl={this.state.imageUrl}
+              box={this.state.box}
+            />
+          </div>
+        }
       </div>
     );
   }
