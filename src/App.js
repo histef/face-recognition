@@ -7,6 +7,7 @@ import Rank from './components/Rank/Rank';
 import ImgLinkForm from './components/ImgLinkForm/ImgLinkForm';
 import FaceRecog from './components/FaceRecog/FaceRecog';
 import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 import API_Key from './config.js';
 
 import './App.css';
@@ -72,12 +73,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SignOut
-          onRouteChange={this.onRouteChange}
-        />
-        {this.state.route === 'signin'
-        ? <SignIn onRouteChange={this.onRouteChange}/>
-        : <div>
+        {this.state.route === 'homepage'
+        ? <div>
+            <SignOut
+              onRouteChange={this.onRouteChange}
+            />
             <Logo />
             <Rank />
             <ImgLinkForm
@@ -89,7 +89,12 @@ class App extends Component {
               box={this.state.box}
             />
           </div>
-        }
+        : (
+            this.state.route === 'signin'
+            ? <SignIn onRouteChange={this.onRouteChange}/>
+            : <Register onRouteChange={this.onRouteChange}/>
+          )
+      }
       </div>
     );
   }
