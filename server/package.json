@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "'the latest'",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,7 @@
     "express": "*"
   },
   "devDependencies": {
-    "nodemon": "*"
+    "nodemon": "^1.18.7"
   },
   "bugs": {
     "url": "https://github.com/histef/face-recognition/issues"
