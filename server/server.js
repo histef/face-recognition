@@ -4,20 +4,21 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.json());
+
 const database = {
   users: [
     {
       id: '1',
       name: 'John',
       email: 'john@gmail.com',
-      password: 'test',
+      password: 'testJohn',
       entries: 0,
       joined: new Date()
     },
     {
       id: '2',
-      name: 'Sally',
-      email: 'sally@gmail.com',
+      name: 'Sal',
+      email: 'sal@gmail.com',
       password: 'testSal',
       entries: 0,
       joined: new Date()
@@ -26,11 +27,11 @@ const database = {
 }
 
 app.get('/', (req, res) => {
-  res.send('server working');
+  res.send(database.users);
 })
 
 app.post('/signin', (req,res) =>{
-  if(req.email === database.users[0].email &&
+  if(req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
       //turns to json string
       res.json('successful sign in');
@@ -39,12 +40,34 @@ app.post('/signin', (req,res) =>{
     }
 })
 
+app.post('/register', (req,res) => {
+  const { email, name, password } = req.body;
+  database.users.push({
+      id: '3',
+      name: name,
+      email: email,
+      password: password,
+      entries: 0,
+      joined: new Date()
+  })
+  //return a response, so we know it got added
+  res.json(database.users[database.users.length-1]);
+})
+
+app.get('/profile/:id', (req, res) => {
+  const { id } = req.params;
+  let foundUser = database.users.filter(user => {
+    if(user.id === id) {
+      return res.json(user)
+    }
+  })
+  if (foundUser.length === 0) {
+    res.status(400).json('user not found');
+  }
+})
+
 app.listen(3000, () => {
   console.log('app is running on port 3000')
 })
 
-// response is working
-//signin --> post success/fail --why post? cuz sending pw. don't want to send as query string (GET) want to send inside body ideally over https so hidden from man in the middle attacks
-//register -> post = user
-//profile/:userId -> get user
 //image -> put -> updated user rank count
