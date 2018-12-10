@@ -26,6 +26,17 @@ const database = {
   ]
 }
 
+const findUser = (id, res) => {
+  let foundUser = database.users.filter(user => {
+    if(user.id === id) {
+      return res.json(user)
+    }
+  })
+  if (foundUser.length === 0) {
+    res.status(400).json('user not found');
+  }
+}
+
 app.get('/', (req, res) => {
   res.send(database.users);
 })
@@ -56,27 +67,18 @@ app.post('/register', (req,res) => {
 
 app.get('/profile/:id', (req, res) => {
   const { id } = req.params;
-  let foundUser = database.users.filter(user => {
-    if(user.id === id) {
-      return res.json(user)
-    }
-  })
-  if (foundUser.length === 0) {
-    res.status(400).json('user not found');
-  }
+  findUser(id, res);
 })
 
 app.put('/image', (req, res) => {
   const { id } = req.body;
   let foundUser = database.users.filter(user => {
     if(user.id === id) {
+      //add entries counter
       user.entries++
-      return res.json(user.entries);
     }
   })
-  if (foundUser.length === 0) {
-    res.status(400).json('user not found');
-  }
+  findUser(id, res);
 })
 
 app.listen(3000, () => {
