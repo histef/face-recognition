@@ -25,6 +25,13 @@ class App extends Component {
     route: 'signin'
   }
 
+//only for testing server connection
+  // componentDidMount() {
+  //   fetch('http://localhost:3000')
+  //   .then(resp => resp.json())
+  //   .then(console.log)
+  // }
+
   getFaceLocations = data => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('input-image');
