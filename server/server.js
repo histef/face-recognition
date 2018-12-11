@@ -43,12 +43,12 @@ app.get('/', (req, res) => {
   res.send(database.users);
 })
 
-app.post('/signin', (req,res) =>{
+app.post('/signin', (req,res) => {
   if(req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
       //turns to json string
       res.json('successful sign in');
-    }else {
+    } else {
       res.status(400).json('error logging in');
     }
 })
