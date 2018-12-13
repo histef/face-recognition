@@ -23,8 +23,9 @@ class SignIn extends Component{
       })
     })
     .then(resp => resp.json())
-    .then(data => {
-      if(data === 'successful sign in') {
+    .then(user => {
+      if(user.id) {
+        this.props.loadUser(user);
         this.props.onRouteChange('homepage');
       }
     })
