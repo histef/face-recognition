@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Rank = () => {
+const Rank = ({ name, entries }) => {
   return (
     <div>
       <div className='f3 center' style ={{color: '#403326'}}>

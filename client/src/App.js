@@ -103,7 +103,10 @@ class App extends Component {
               onRouteChange={this.onRouteChange}
             />
             <Logo />
-            <Rank />
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
             <ImgLinkForm
               onInputChange={this.handleInputChange}
               onSubmit={this.handleSubmit}
