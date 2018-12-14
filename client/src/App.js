@@ -17,6 +17,8 @@ const app = new Clarifai.App({
 });
 
 
+//README "copy image address" from google images
+
 class App extends Component {
   state = {
     input: '',
@@ -77,17 +79,29 @@ class App extends Component {
   //for buttons, always need an onSubmit function
   handleSubmit = () => {
     // the image url should get displayed on submit
-    this.setState({
-      imageUrl: this.state.input
-    }, () => {
-      //to use imageUrl, need to use cb in setState so when imageUrl ahs value THEN FACE_DETECT will start
-      app.models.predict(
-        Clarifai.FACE_DETECT_MODEL, this.state.imageUrl)
-      .then(response => {
-          this.displayFaceBox(this.getFaceLocations(response))
-      })
-      .catch (err => console.log(`[Error]: ${err}`))
+
+    this.setState({ imageUrl: this.state.input });
+      // () => {
+       //to use imageUrl, need to use cb in setState so when imageUrl has value THEN FACE_DETECT will start
+      app.models
+        .predict(Clarifai.FACE_DETECT_MODEL,this.state.input)
+          .then(response => {
+            if(response) {
+                fetch('http://localhost:3000/image', {
+                  method: 'put',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ id: this.state.user.id })
+                })
+              .then(response => response.json())
+              .then(count => {
+                this.setState({ user: {
+                  entries: count
+              }})
+            })
+        }
+        this.displayFaceBox(this.getFaceLocation(response))
     })
+        .catch(err=> console.log(err))
   }
 
   onRouteChange = (route) => {

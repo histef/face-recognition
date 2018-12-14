@@ -44,13 +44,14 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req,res) => {
-  if(req.body.email === database.users[0].email &&
-    req.body.password === database.users[0].password) {
-      //turns to json string
+  if(req.body.email === database.users[0].email){
+    if(req.body.password === database.users[0].password){
+      //turns into json string
       res.json(database.users[0]);
     } else {
       res.status(400).json('error logging in');
     }
+  }
 })
 
 app.post('/register', (req,res) => {
