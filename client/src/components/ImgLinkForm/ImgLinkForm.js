@@ -38,7 +38,7 @@ const ImgLinkForm = ({ onInputChange, onSubmit }) => {
   return (
     <div>
       <p className='f3 center'>
-        {'Load a photo and watch the AI detect the faces'}
+        {'Load a .jpeg or .png photo and watch the AI detect the faces'}
       </p>
         <div className='form center pa4 br3 shadow-5'>
           <input className='f4 pa2 w-70' type='text' onChange={e => onInputChange(e)}/>
