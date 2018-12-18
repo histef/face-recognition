@@ -1,8 +1,4 @@
-.Tilt {
-  background-color: navy;
-}
-
-.logo {
+article {
   background:
   linear-gradient(135deg, #d4d8dd 21px, #f3f9ff 22px, #f3f9ff 24px, transparent 24px, transparent 67px, #f3f9ff 67px, #f3f9ff 69px, transparent 69px),
   linear-gradient(225deg, #d4d8dd 21px, #f3f9ff 22px, #f3f9ff 24px, transparent 24px, transparent 67px, #f3f9ff 67px, #f3f9ff 69px, transparent 69px)0 64px;
