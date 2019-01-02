@@ -26,6 +26,7 @@ class SignIn extends Component{
     .then(resp => resp.json())
     .then(user => {
       if(user.id) {
+        //we're no longer checking if value is 'successful login', now we have to check user's id to update the Rank
         this.props.loadUser(user);
         this.props.onRouteChange('homepage');
       }
