@@ -5,10 +5,8 @@ const cors = require('cors');
 const app = express();
 
 app.use(bodyParser.json());
-<<<<<<< HEAD
-=======
+
 app.use(cors());
->>>>>>> 4ffa44539e3f04bf3a5ed0222ae03bf8ac21b4d6
 
 const database = {
   users: [
@@ -46,21 +44,13 @@ app.get('/', (req, res) => {
   res.send(database.users);
 })
 
-<<<<<<< HEAD
-app.post('/signin', (req,res) =>{
-  if(req.body.email === database.users[0].email &&
-    req.body.password === database.users[0].password) {
-      //turns to json string
-      res.json('successful sign in');
-    }else {
-=======
+
 app.post('/signin', (req,res) => {
   if(req.body.email === database.users[0].email){
     if(req.body.password === database.users[0].password){
       //turns into json string
       res.json(database.users[0]);
     } else {
->>>>>>> 4ffa44539e3f04bf3a5ed0222ae03bf8ac21b4d6
       res.status(400).json('error logging in');
     }
   }
