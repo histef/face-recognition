@@ -1,27 +1,19 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "'the latest'",
-  "main": "app.js",
+  "description": "\"the-latest\"",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/histef/face-recognition.git"
   },
   "author": "Stefanie Chin",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "*",
-    "express": "*"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.7"
-  },
-  "bugs": {
-    "url": "https://github.com/histef/face-recognition/issues"
-  },
-  "homepage": "https://github.com/histef/face-recognition#readme"
+  }
 }
