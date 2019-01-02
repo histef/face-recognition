@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.json());
+
 const database = {
   users: [
     {
@@ -30,7 +31,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req,res) =>{
-  if(req.email === database.users[0].email &&
+  if(req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
       //turns to json string
       res.json('successful sign in');
