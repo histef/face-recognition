@@ -1,9 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
 app.use(bodyParser.json());
+<<<<<<< HEAD
+=======
+app.use(cors());
+>>>>>>> 4ffa44539e3f04bf3a5ed0222ae03bf8ac21b4d6
 
 const database = {
   users: [
@@ -11,14 +16,14 @@ const database = {
       id: '1',
       name: 'John',
       email: 'john@gmail.com',
-      password: 'test',
+      password: 'testJohn',
       entries: 0,
       joined: new Date()
     },
     {
       id: '2',
-      name: 'Sally',
-      email: 'sally@gmail.com',
+      name: 'Sal',
+      email: 'sal@gmail.com',
       password: 'testSal',
       entries: 0,
       joined: new Date()
@@ -26,26 +31,73 @@ const database = {
   ]
 }
 
+const findUser = (id, res) => {
+  let foundUser = database.users.filter(user => {
+    if(user.id === id) {
+      return res.json(user)
+    }
+  })
+  if (foundUser.length === 0) {
+    res.status(400).json('user not found');
+  }
+}
+
 app.get('/', (req, res) => {
-  res.send('server working');
+  res.send(database.users);
 })
 
+<<<<<<< HEAD
 app.post('/signin', (req,res) =>{
   if(req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
       //turns to json string
       res.json('successful sign in');
     }else {
+=======
+app.post('/signin', (req,res) => {
+  if(req.body.email === database.users[0].email){
+    if(req.body.password === database.users[0].password){
+      //turns into json string
+      res.json(database.users[0]);
+    } else {
+>>>>>>> 4ffa44539e3f04bf3a5ed0222ae03bf8ac21b4d6
       res.status(400).json('error logging in');
     }
+  }
+})
+
+app.post('/register', (req,res) => {
+  const { email, name, password } = req.body;
+  database.users.push({
+      id: '3',
+      name: name,
+      email: email,
+      password: password,
+      entries: 0,
+      joined: new Date()
+  })
+  //return a response, so we know it got added
+  res.json(database.users[database.users.length-1]);
+})
+
+app.get('/profile/:id', (req, res) => {
+  const { id } = req.params;
+  findUser(id, res);
+})
+
+app.put('/image', (req, res) => {
+  const { id } = req.body;
+  let foundUser = database.users.filter(user => {
+    if(user.id === id) {
+      //add entries counter
+      user.entries++
+    }
+  })
+  findUser(id, res);
 })
 
 app.listen(3000, () => {
   console.log('app is running on port 3000')
 })
 
-// response is working
-//signin --> post success/fail --why post? cuz sending pw. don't want to send as query string (GET) want to send inside body ideally over https so hidden from man in the middle attacks
-//register -> post = user
-//profile/:userId -> get user
 //image -> put -> updated user rank count
