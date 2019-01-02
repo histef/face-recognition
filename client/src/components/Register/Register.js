@@ -10,19 +10,19 @@ class Register extends Component {
   
   onNameChange = e =>{
     this.setState({
-      signInName: e.target.value
+      name: e.target.value
     })
   }
   
   onEmailChange = e => {
     this.setState({
-      signInEmail: e.target.value
+      email: e.target.value
     })
   }
 
   onPasswordChange = e => {
     this.setState({
-      signInPassword: e.target.value
+      password: e.target.value
     })
   }
 
